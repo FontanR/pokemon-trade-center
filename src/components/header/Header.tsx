@@ -1,12 +1,11 @@
 'use client';
-import { Autocomplete, TextField, IconButton } from '@mui/material';
+import { TextField, IconButton } from '@mui/material';
 import {
   Search,
   Person,
   ShoppingCart,
   Menu,
   NewReleases,
-  Style,
   Inventory,
   VideogameAsset,
   Close,
@@ -16,12 +15,26 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const router = useRouter();
 
   const handleMenuOpen = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleSearch = () => {
+    const trimmedValue = searchValue.trim();
+    router.push(`?q=${trimmedValue}`);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
@@ -32,17 +45,15 @@ export default function Header() {
         </IconButton>
         {menuOpen && (
           <div className='fixed top-0 left-0 right-0 bottom-0 z-50 bg-black bg-opacity-50'>
-            <ul className='pt-2 w-screen flex flex-col justify-around bg-white'>
-              <IconButton className='self-end' onClick={handleMenuOpen}>
-                <Close />
-              </IconButton>
+            <ul className='w-screen flex flex-col justify-around bg-white'>
+              <li className='self-end'>
+                <IconButton className='p-3' onClick={handleMenuOpen}>
+                  <Close />
+                </IconButton>
+              </li>
               <li className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 p-4 border-b border-t border-gray-300'>
                 <NewReleases />
                 <span>New Releases</span>
-              </li>
-              <li className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 p-4 border-b border-gray-300'>
-                <Style />
-                <span>TCG Cards</span>
               </li>
               <li className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 p-4 border-b border-gray-300'>
                 <Inventory />
@@ -50,11 +61,13 @@ export default function Header() {
               </li>
               <li className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 p-4 border-b border-gray-300'>
                 <VideogameAsset />
-                <span>Video Games</span>
+                <a href='https://tcg.pokemon.com/es-es/tcgl/' target='_blank'>
+                  Video Game
+                </a>
               </li>
             </ul>
             <div className='bg-neutral-300'>
-              <div className='px-6 py-3 w-52 flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700'>
+              <div className='px-6 py-3 w-52\] flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700'>
                 <Person className='text-white' />
                 <span className='text-white'>Sign In / Register</span>
               </div>
@@ -73,7 +86,7 @@ export default function Header() {
           </div>
         )}
         <div className='flex items-center'>
-          <Image src='/pokeball.svg' alt='Pokeball' width={35} height={35} priority />
+          <Image src='/pokeball.png' alt='Pokeball' width={35} height={35} priority />
           <h1 className='text-xl mx-2'>Pokemon Trade Center</h1>
         </div>
         <div className='flex'>
@@ -88,37 +101,34 @@ export default function Header() {
         </div>
       </div>
       <div className='flex items-center w-3/4 px-4 py-2'>
-        <Autocomplete
-          disablePortal
+        <TextField
           id='search-input'
-          options={popularPokemons}
           fullWidth
-          renderInput={(params) => <TextField {...params} label='Search you card' />}
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.target.value)}
+          placeholder='Search your favorites cards'
+          onKeyUp={handleKeyPress}
         />
-        <IconButton className='p-4'>
+        <IconButton className='p-4' onClick={handleSearch}>
           <Search />
         </IconButton>
       </div>
       <ul className='hidden px-4 py-2 w-screen lg:flex lg:justify-around'>
-        <li className='flex flex-col items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
+        <li className='navbar-links'>
           <NewReleases />
           <span>New Releases</span>
         </li>
-        <li className='flex flex-col items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
-          <Style />
-          <span>TCG Cards</span>
-        </li>
-        <li className='flex flex-col items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
+        <li className='navbar-links'>
           <Inventory />
           <span>TCG Accesories</span>
         </li>
-        <li className='flex flex-col items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
+        <li className='navbar-links'>
           <VideogameAsset />
-          <span>Video Games</span>
+          <a href='https://tcg.pokemon.com/es-es/tcgl/' target='_blank'>
+            Video Game
+          </a>
         </li>
       </ul>
     </header>
   );
 }
-
-const popularPokemons = [{ label: 'Pikachu' }, { label: 'Charizard' }, { label: 'Mew' }];

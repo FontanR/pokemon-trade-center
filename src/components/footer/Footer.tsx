@@ -8,14 +8,10 @@ export default function Footer() {
 
   return (
     <footer className='flex flex-col items-center'>
-      <div className='flex items-center my-4'>
-        <Image src='/pokeball.svg' alt='Pokeball' width={35} height={35} priority />
-        <h1 className='text-xl mx-2'>Pokemon Trade Center</h1>
-      </div>
       <div className='flex flex-col justify-center items-center'>
         <div className='flex flex-col justify-center items-center uppercase space-y-2 bg-neutral-300 w-screen lg:flex-row'>
           <div className='flex flex-col justify-center items-center text-center w-screen bg-white lg:bg-neutral-300 lg:justify-around lg:w-1/4 lg:min-h-72'>
-            <Image src='/svg-pikachu.png' alt='Pikachu' width={150} height={150} quality={100} />
+            <Image src='/pikachu.png' alt='Pikachu' width={150} height={150} quality={100} />
             <Button className='my-4' variant='outlined'>Get email updates</Button>
           </div>
           <div className='flex flex-col justify-center items-center text-center lg:justify-normal lg:w-1/4 lg:min-h-72'>
