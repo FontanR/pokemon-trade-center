@@ -16,6 +16,7 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -90,10 +91,12 @@ export default function Header() {
           <h1 className='text-xl mx-2'>Pokemon Trade Center</h1>
         </div>
         <div className='flex'>
-          <div className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
-            <Person />
-            <span className='hidden lg:block'>Sign In / Register</span>
-          </div>
+          <Link href='/register'>
+            <div className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
+              <Person />
+              <span className='hidden lg:block'>Sign In / Register</span>
+            </div>
+          </Link>
           <div className='flex items-center cursor-pointer transition-colors duration-200 hover:text-blue-700 px-4'>
             <ShoppingCart />
             <span className='hidden lg:block'>My Cart</span>

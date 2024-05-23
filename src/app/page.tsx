@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
-import { seedCards } from '@/seed/seedCards';
+import { seedCards } from '@/lib/seeds/seedCards';
 interface Card {
   id: string;
   name: string;
@@ -57,8 +57,6 @@ export default function Home() {
       setIsLoading(false);
     }
   }, []);
-
-  console.log('cards data', cardsData);
 
   return (
     <main>

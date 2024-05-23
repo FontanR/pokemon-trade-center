@@ -26,4 +26,10 @@ body {
   .navbar-links:hover {
     color: rgb(29 78 216);
   }
+
+  .helperText {
+  height: 1rem;
+  color: #d32f2f;
+  font-size: 0.8em;
+  }
 }
